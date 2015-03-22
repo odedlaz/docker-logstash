@@ -22,6 +22,7 @@ This repository contains a **Dockerfile** of [LogStash](http://logstash.net/) fo
 5. generate an SSL certificate for LogStash lumberjack: `cd <ssl-dir> | openssl req -subj '/CN=<hostname_of_computer_running_docker>/' -x509 -days 3650 -batch -nodes -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt`
 
 6. configure LogStash-Forwarder to use the generates certificate. example:
+
 ```json
 {
   "network": {
@@ -95,5 +96,5 @@ docker run -d --link <your_es_container_name>:es -p 8200:8200 -p 5000:5000 -v <s
   3. Start a container by mounting data directory and specifying the custom configuration file:
 
     ```sh
-docker run -d --link elasticsearch:es -p 8200:8200 -p 5000:5000 -v <ssl-dir>:/etc/pki/tls -v <config-dir>:/opt/logstash/config.d  sxoded/logstash
+docker run -d --link <your_es_container_name>:es -p 8200:8200 -p 5000:5000 -v <ssl-dir>:/etc/pki/tls -v <config-dir>:/opt/logstash/config.d  sxoded/logstash
     ```
